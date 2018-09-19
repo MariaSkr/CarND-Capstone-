@@ -24,6 +24,7 @@ class TLDetector(object):
         self.lights = []
         self.waypoint_tree = None
         self.waypoints_2d = None
+        self.traffic_cb_count = 0
 
         sub1 = rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
         sub2 = rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
@@ -42,9 +43,10 @@ class TLDetector(object):
         self.config = yaml.load(config_string)
 
         self.upcoming_red_light_pub = rospy.Publisher('/traffic_waypoint', Int32, queue_size=1)
+        self.image_classified_pub = rospy.Publisher('/image_classified', Image, queue_size=1)
 
         self.bridge = CvBridge()
-        self.light_classifier = TLClassifier()
+        self.light_classifier = TLClassifier(self.config['is_site'])
         #self.listener = tf.TransformListener()
 
         self.state = TrafficLight.UNKNOWN
@@ -52,7 +54,6 @@ class TLDetector(object):
         self.last_wp = -1
         self.state_count = 0
         self.has_image = False
-        self.traffic_cb_count = 0
 
         rospy.spin()
 
@@ -86,6 +87,9 @@ class TLDetector(object):
         self.has_image = True
         self.camera_image = msg
         light_wp, state = self.process_traffic_lights()
+        if self.light_classifier.image_classified is not None:
+            self.image_classified_pub.publish(self.bridge.cv2_to_imgmsg(self.light_classifier.image_classified, 'rgb8'))
+
         self.publish_upcoming_red_light(light_wp, state)
 
     def publish_upcoming_red_light(self, light_wp, state):
@@ -135,10 +139,9 @@ class TLDetector(object):
         if not self.config['is_site'] and not self.has_image:
             return light.state
         elif not self.has_image:
-            #self.prev_light_loc = None
             return False
         else:
-            cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
+            cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "rgb8")
             # Get classification
             return self.light_classifier.get_classification(cv_image)
 
