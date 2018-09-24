@@ -12,13 +12,14 @@ class TLClassifier(object):
         # set default value for no detection
         self.current_light = TrafficLight.UNKNOWN
         curr_dir = os.path.dirname(os.path.realpath(__file__))
+        model_dir = curr_dir + '/../../../../image_classification_model/'
         if is_site:
-            model = curr_dir + '/models/frozen_inference_graph.pb'
+            model = model_dir + '/protobuf/frozen_inference_graph_ssd_real.pb'
         else:
-            model = curr_dir + '/models/frozen_inference_graph.pb'
+            model = model_dir + '/protobuf/frozen_inference_graph_ssd_sim.pb'
 
         num_classes = 4
-        labels_file = curr_dir + '/label_map.pbtxt'
+        labels_file = model_dir + '/label_map.pbtxt'
         label_map = label_map_util.load_labelmap(labels_file)
         categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=num_classes, use_display_name=True)
         self.category_index = label_map_util.create_category_index(categories)
