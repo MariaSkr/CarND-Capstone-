@@ -48,7 +48,7 @@ class TLClassifier(object):
         self.num_detections = self.detection_graph.get_tensor_by_name('num_detections:0')
 
         self.image_classified = None
-        print("Frozen graph loaded!")
+        print("Frozen graph loaded! model: {}".format(model))
 
     def get_classification(self, image):
         """Determines the color of the traffic light in the image
