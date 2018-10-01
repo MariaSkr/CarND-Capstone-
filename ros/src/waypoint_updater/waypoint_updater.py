@@ -26,6 +26,7 @@ TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 
 LOOKAHEAD_WPS = 40 # Number of waypoints we will publish. You can change this number
 #MAX_DECEL = .5 
+SLOWDOWN = 0.2
 
 
 class WaypointUpdater(object):
@@ -164,9 +165,39 @@ class WaypointUpdater(object):
             wp1 = i
         return dist
 
+    def is_stop_close(self, base_waypoint_idx):
+        """ Checks whether it is time to start slowing down
+        """
+        stop_is_close = False
+
+        if self.stop_wp > 0:
+            # stop is ahead
+            d_stop = self.distance(
+                self.base_waypoints, base_waypoint_idx, self.stop_wp) - self.stop_m
+            current_wp = self.base_waypoints[base_waypoint_idx]
+            stop_is_close = d_stop < current_wp.twist.twist.linear.x ** SLOWDOWN
+
+        return stop_is_close
+
+    def brake(self, i):
+        """ Decreases waypoint velocity
+        """
+        wp = self.base_waypoints[i]
+        wp_speed = wp.twist.twist.linear.x
+
+        d_stop = self.distance(self.base_waypoints, i, self.stop_wp) - self.stop_m
+
+        speed = 0.
+        if d_stop > 0:
+            speed = d_stop * (wp_speed ** (1. - SLOWDOWN))
+        if speed < 1:
+            speed = 0.
+
+        return speed
 
 if __name__ == '__main__':
     try:
         WaypointUpdater()
     except rospy.ROSInterruptException:
         rospy.logerr('Could not start waypoint updater node.')
+
