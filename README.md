@@ -111,7 +111,7 @@ If 1st detection of a RED Traffic Light: compute a deceleration path ( in SQRT; 
             speed = 0.
         return speed
 ```
-- If end of red light: we restore the original planned path and its associated velocities.
+If end of red light: we restore the original planned path and its associated velocities.
 
 
 **Publisher:**
