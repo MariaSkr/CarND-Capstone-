@@ -1,3 +1,12 @@
+
+### Udacity Team
+
+Maria Skryagina (maria.skriaghina@gmail.com)
+Amit Marathe (amit.marathe@gmail.com)
+Leo Mao (leo.cl.mao@gmail.com)
+Junxiao Zhu (junxiaozhu@gmail.com)
+Linsen Chong (linsen.chong@gmail.com)
+
 This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9).
 
 Please use **one** of the two installation options, either native **or** docker installation.
@@ -6,6 +15,9 @@ Please use **one** of the two installation options, either native **or** docker 
 ### Introduction
 
 In this project, our team designed an autonomous vehicle system. We tested on a simulator. The project consists of several parts: 1) Traffic light detection, 2) waypoint generation and 3) manuever and control.
+
+### Architecture Diagram
+![Alt text](majl/imgs/final-project-ros-graph-v2.png ?raw=true "Architecture Diagram")
 
 ### Traffic Light Detection
 In this part, we detect the closest traffic light ahead and classifying the color of this light from images.
