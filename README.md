@@ -18,7 +18,7 @@ In this project, our team designed an autonomous vehicle system. We tested on a 
 
 ### Architecture Diagram
 
-![alt text](https://github.com/amitmarathe/majl/imgs/final-project-ros-graph-v2.png)
+![image](imgs/final-project-ros-graph-v2.png)
  
 
 ### Traffic Light Detection
