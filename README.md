@@ -2,6 +2,46 @@ This is the project repo for the final project of the Udacity Self-Driving Car N
 
 Please use **one** of the two installation options, either native **or** docker installation.
 
+
+###Introduction
+
+In this project, our team designed an autonomous vehicle system. We tested on a simulator. The project consists of several parts: 1) Traffic light detection, 2) waypoint generation and 3) manuever and control.
+
+###Traffic Light Detection
+In this part, we detect the closest traffic light ahead and classifying the color of this light from images.
+
+Getting the color of traffic light from images can include two tasks: detecting where traffic lights are and then determining the color of traffic light. In this project, we use [Tensorflow Object Detection API]( https://github.com/tensorflow/models/tree/master/research/object_detection). We followed the API guidances to install the API, prepare training data  train our model. Here, we briefly discribe the key steps.
+
+####Training data preparation
+Tensorflow API requires images and the corresponding labels (to denote where the objects are and the class label) as raw data. In order to train the model with API, we need to convert the data into TFRecord format. The training images we use are the Udacity traffic light data (simulator and real data) from [here](https://drive.google.com/file/d/0B-Eiyn-CUQtxdUZWMkFfQzdObUE/view). The data include images (simulator and real data) and their labels. We would like to thank [Anthony Sarkis](https://medium.com/@anthony_sarkis) for making this data set available). From this data, we create the TFRecord files.
+
+
+
+###Train the model
+We then follow the TensorFlow API [guideline](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md) to train the model. The most importance thing is to choose a model and setup the [objective detection pipeline configuration](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md) for the model. Luckily, TensorFlow API provides a rich set of object detection models, see [Tensorflow detection model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md). We choose model ssd_inception_v2_coco model since it runs fast. This gives us to use a the onfiguration file template for ssd_inception model, see [ssd_inception_v2.config](https://github.com/tensorflow/models/blob/master/research/object_detection/samples/configs/ssd_inception_v2_coco.config).
+
+Our configuration files are [ssd_inception_v2_sim.config](https://github.com/amitmarathe/majl/blob/master/image_classification_model/config/ssd_inception_v2_sim.config), for simulator data; and [ssd_inception_v2_real.config](https://github.com/amitmarathe/majl/blob/master/image_classification_model/config/ssd_inception_v2_real.config) for real data.
+
+In addition, we need a provide a [label_map](https://github.com/amitmarathe/majl/blob/master/image_classification_model/label_map.pbtxt) file to associate class ids to colors. This file is needed in configuration.
+
+The key points to set up include
+num_classes: 4
+max_detections_per_class:50
+max_total_detections:50. 
+num_steps: 5000.
+fine_tune_checkpoint: "ssd_inception_v2_coco_2018_01_28/model.ckpt"
+
+###Generate protobuf
+Once training is finished, the model and metamodel as saved as .ckpt files. The next step is freeze the model and save them as protobuf file. We use TensorFlow API's [exporter](https://github.com/tensorflow/models/blob/master/research/object_detection/export_inference_graph.py) to generate protobuf file from the .ckpt files. 
+The protobuf files can be found in folder [protobuf](https://github.com/amitmarathe/majl/tree/master/image_classification_model/protobuf). 
+
+For the trained model on simulator data, we freeze the trained model at checkpoint 2841 (model.ckpt-2841). For real data, we use model at checkpoint1096.
+
+###Note
+Udacity requires tensorflow version 1.3.0. to run the traffic light detector. However, the tensorflow API requires Tensorflow (>=1.9.0) to train the model. Therefore, our workflow involves 1) using tensorflow 1.9.0 to generate model checkpoints (i.e.,model.ckpt files), and 2) using the exporter of tensorflow 1.3.0. to create protobuf files. 
+
+
+
 ### Native Installation
 
 * Be sure that your workstation is running Ubuntu 16.04 Xenial Xerus or Ubuntu 14.04 Trusty Tahir. [Ubuntu downloads can be found here](https://www.ubuntu.com/download/desktop).
