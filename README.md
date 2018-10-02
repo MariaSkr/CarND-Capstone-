@@ -83,37 +83,6 @@ Udacity requires tensorflow version 1.3.0. to run the traffic light detector. Ho
 - /base_waypoints: path planned as a discrete set of (x, y) positions
 - /traffic_waypoint: -1 or a number > 0 corresponding to a waypoint where we should stop (RED light match)
 
-
-If 1st detection of a RED Traffic Light: compute a deceleration path ( in SQRT; Not a linear decrease: the faster the decrease the closer to the stop position )
-```python
-    def is_stop_close(self, base_waypoint_idx):
-        """ Checks whether it is time to start slowing down
-        """
-        stop_is_close = False
-        if self.stop_wp > 0:
-            # stop is ahead
-            d_stop = self.distance(
-            self.base_waypoints, base_waypoint_idx, self.stop_wp) - self.stop_m
-            current_wp = self.base_waypoints[base_waypoint_idx]
-            stop_is_close = d_stop < current_wp.twist.twist.linear.x ** SLOWDOWN
-        return stop_is_close
-
-    def brake(self, i):
-        """ Decreases waypoint velocity
-        """
-        wp = self.base_waypoints[i]
-        wp_speed = wp.twist.twist.linear.x
-        d_stop = self.distance(self.base_waypoints, i, self.stop_wp) - self.stop_m
-        speed = 0.
-        if d_stop > 0:
-           speed = d_stop * (wp_speed ** (1. - SLOWDOWN))
-        if speed < 1:
-            speed = 0.
-        return speed
-```
-If end of red light: we restore the original planned path and its associated velocities.
-
-
 **Publisher:**
 - /final_waypoints: a set of waypoints and their associated velocity (based on object/traffic light detection information) that we should follow
 
