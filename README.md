@@ -111,7 +111,30 @@ https://www.ri.cmu.edu/pub_files/2009/2/Automatic_Steering_Methods_for_Autonomou
 - /current_pose:
 - /current_velocity:
 
+### DBW Node
 
+
+**Subscribers:**
+- /vehicle/dbw_enabled: DBW status.
+- /twist_cmd: target vehicle linear and angular velocities.
+- /current_velocity: current linear velocity in m/s.
+
+**Publisher:**
+- /vehicle/steering_cmd: steering commands
+- /vehicle/throttle_cmd: throttle commands
+- /vehicle/brake_cmd: brake commands
+
+**Loop: 50 HZ**
+- every 20 ms: 
+     - Check if DBW is enable.
+     - Calculate the differences between the target and current linear velocities.
+     - Use PID controller to provide throttle and brake commands.
+	 - Calculate the differences between the target and current angular velocities.
+	 - Use yaw controller to provide steering commands.
+	 - Publish  /vehicle/steering_cmd, /vehicle/throttle_cmd and /vehicle/brake_cmd
+
+**PID controller**
+- The PID controller is turned to be an overdumped system, which makes the vehicle will be stopped smoothly. 
 
 ### Native Installation
 
