@@ -13,9 +13,9 @@ class Controller(object):
 
     	self.yaw_controller = YawController(wheel_base,steer_ratio,0.1,max_lat_accel,max_steer_angle)
 
-    	kp = 0.4
+    	kp = 0.06
     	ki = 0.1
-    	kd = 0.01
+    	kd = 0.03
     	mn = 0.  #min throttle value
     	mx = 0.5 #max throttle value
     	self.throttle_controller = PID (kp,ki,kd,mn,mx)
@@ -74,3 +74,4 @@ class Controller(object):
         	brake = abs(decel)*self.vehicle_mass*self.wheel_radius #Torque N*m
 
         return throttle,brake,steering 
+
