@@ -82,9 +82,9 @@ Udacity requires tensorflow version 1.3.0. to run the traffic light detector. Ho
 - /current_pose: ego (x, y) position. Populated by Autoware locatization module (GPS+LIDAR based).
 - /base_waypoints: path planned as a discrete set of (x, y) positions
 - /traffic_waypoint: -1 or a number > 0 corresponding to a waypoint where we should stop (RED light match)
-- /current_velocity: linear and angular veocity. Here we use only the linear velocity.
 
-- If 1st detection of a RED Traffic Light: compute a deceleration path ( in SQRT; Not a linear decrease: the faster the decrease the closer to the stop position )
+
+If 1st detection of a RED Traffic Light: compute a deceleration path ( in SQRT; Not a linear decrease: the faster the decrease the closer to the stop position )
 ```python
     def is_stop_close(self, base_waypoint_idx):
         """ Checks whether it is time to start slowing down
