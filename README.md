@@ -17,7 +17,9 @@ Please use **one** of the two installation options, either native **or** docker 
 In this project, our team designed an autonomous vehicle system. We tested on a simulator. The project consists of several parts: 1) Traffic light detection, 2) waypoint generation and 3) manuever and control.
 
 ### Architecture Diagram
-![alt text](https://github.com/amitmarathe/majl/imgs/final-project-ros-graph-v2.png )
+
+![alt text](https://github.com/amitmarathe/majl/imgs/final-project-ros-graph-v2.png)
+ 
 
 ### Traffic Light Detection
 In this part, we detect the closest traffic light ahead and classifying the color of this light from images.
