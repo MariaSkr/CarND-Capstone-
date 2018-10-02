@@ -54,6 +54,94 @@ For the trained model on simulator data, we freeze the trained model at checkpoi
 #### Note
 Udacity requires tensorflow version 1.3.0. to run the traffic light detector. However, the tensorflow API requires Tensorflow (>=1.9.0) to train the model. Therefore, our workflow involves 1) using tensorflow 1.9.0 to generate model checkpoints (i.e.,model.ckpt files), and 2) using the exporter of tensorflow 1.3.0. to create protobuf files. 
 
+### Waypoint Loader Node
+
+- From Autoware
+
+```xml
+<?xml version="1.0"?>
+<launch>
+    <node pkg="waypoint_loader" type="waypoint_loader.py" name="waypoint_loader">
+        <param name="path" value="$(find styx)../../../data/wp_yaw_const.csv" />
+        <param name="velocity" value="40" />
+    </node>
+</launch>
+```
+
+**Parameters:**
+- load a csv file corresponding to a path to follow + a configurable maximum velocity
+
+**Publisher:**
+- /base_waypoints: set of waypoints and associated target velocity corresonding to a planned path (note that we stop at the end of the planned path)
+
+
+### Waypoint Updater Node
+
+
+**Subscribers:**
+- /current_pose: ego (x, y) position. Populated by Autoware locatization module (GPS+LIDAR based).
+- /base_waypoints: path planned as a discrete set of (x, y) positions
+- /traffic_waypoint: -1 or a number > 0 corresponding to a waypoint where we should stop (RED light match)
+- /current_velocity: linear and angular veocity. Here we use only the linear velocity.
+
+- If 1st detection of a RED Traffic Light: compute a deceleration path ( in SQRT; Not a linear decrease: the faster the decrease the closer to the stop position )
+```python
+    def is_stop_close(self, base_waypoint_idx):
+        """ Checks whether it is time to start slowing down
+        """
+        stop_is_close = False
+        if self.stop_wp > 0:
+            # stop is ahead
+            d_stop = self.distance(
+            self.base_waypoints, base_waypoint_idx, self.stop_wp) - self.stop_m
+            current_wp = self.base_waypoints[base_waypoint_idx]
+            stop_is_close = d_stop < current_wp.twist.twist.linear.x ** SLOWDOWN
+        return stop_is_close
+
+    def brake(self, i):
+        """ Decreases waypoint velocity
+        """
+        wp = self.base_waypoints[i]
+        wp_speed = wp.twist.twist.linear.x
+        d_stop = self.distance(self.base_waypoints, i, self.stop_wp) - self.stop_m
+        speed = 0.
+        if d_stop > 0:
+           speed = d_stop * (wp_speed ** (1. - SLOWDOWN))
+        if speed < 1:
+            speed = 0.
+        return speed
+```
+- If end of red light: we restore the original planned path and its associated velocities.
+
+
+**Publisher:**
+- /final_waypoints: a set of waypoints and their associated velocity (based on object/traffic light detection information) that we should follow
+
+**Loop: 10 HZ**
+- every 100 ms: 
+     - Find the closest waypoints (with base_waypoint)
+     - Extract LOOKAHEAD_WPS waypoints (typically 40 points). Per waypoint velocity has been already updated by /traffic_waypoint callback
+     - Publish /final_waypoints
+
+![image](imgs/waypoint-updater.png )
+
+### Waypoint Follower Node
+
+- Pure Pursuit from Autoware
+  
+For more details cf:   
+https://www.ri.cmu.edu/pub_files/pub3/coulter_r_craig_1992_1/coulter_r_craig_1992_1.pdf  
+https://www.ri.cmu.edu/pub_files/2009/2/Automatic_Steering_Methods_for_Autonomous_Automobile_Path_Tracking.pdf  
+
+
+**Parameters:**
+- /linear_interpolate_mode:  
+
+**Subscribers:**
+- /final_waypoints: 
+- /current_pose:
+- /current_velocity:
+
 
 
 ### Native Installation
