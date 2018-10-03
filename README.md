@@ -86,8 +86,8 @@ Udacity requires tensorflow version 1.3.0. to run the traffic light detector. Ho
 **Publisher:**
 - /final_waypoints: a set of waypoints and their associated velocity (based on object/traffic light detection information) that we should follow
 
-**Loop: 10 HZ**
-- every 100 ms: 
+**Loop: 50 HZ**
+- every 20 ms: 
      - Find the closest waypoints (with base_waypoint)
      - Extract LOOKAHEAD_WPS waypoints (typically 40 points). Per waypoint velocity has been already updated by /traffic_waypoint callback
      - Publish /final_waypoints
