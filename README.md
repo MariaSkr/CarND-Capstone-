@@ -22,6 +22,9 @@ Project contributions: Initial working git repo, Waypoint Updater Node and Syste
 
 leo.cl.mao@gmail.com
 
+Engineer Manager at Telenav
+
+Project contributions: Implement Traffic Light Detection Node. Integrate with trained models for traffic light detection and color classification.
 
 #### Junxiao Zhu 
 
