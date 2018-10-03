@@ -9,6 +9,9 @@ This is the project repo for the final project of the Udacity Self-Driving Car N
 
 maria.skriaghina@gmail.com
 
+Algorithm Developer for ADAS at ZF
+
+Project contributions: Team Leader, Integration and System Test, participation to the final tuning.
 
 #### Amit Marathe 
 
