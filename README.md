@@ -1,15 +1,40 @@
 
-### Udacity Team
-
-- Maria Skryagina (maria.skriaghina@gmail.com)
-- Amit Marathe (amit.marathe@gmail.com)
-- Leo Mao (leo.cl.mao@gmail.com)
-- Junxiao Zhu (junxiaozhu@gmail.com)
-- Linsen Chong (linsen.chong@gmail.com)
+### Project - System Integration
 
 This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9).
 
-Please use **one** of the two installation options, either native **or** docker installation.
+### Udacity Team
+
+#### Maria Skryagina 
+
+maria.skriaghina@gmail.com
+
+
+#### Amit Marathe 
+
+amit.marathe@gmail.com
+
+#### Leo Mao 
+
+leo.cl.mao@gmail.com
+
+
+#### Junxiao Zhu 
+
+junxiaozhu@gmail.com
+
+#### Linsen Chong 
+
+linsen.chong@gmail.com
+
+Data Scientist at Cruise Automation
+
+Project contributions: train and develop deep learning models for traffic light detection and traffic light color classification.
+
+
+
+
+
 
 
 ### Introduction
@@ -103,8 +128,8 @@ To view the classification result in real time, run `rosrun image_view image_vie
 **Publisher:**
 - /final_waypoints: a set of waypoints and their associated velocity (based on object/traffic light detection information) that we should follow
 
-**Loop: 10 HZ**
-- every 100 ms: 
+**Loop: 50 HZ**
+- every 20 ms: 
      - Find the closest waypoints (with base_waypoint)
      - Extract LOOKAHEAD_WPS waypoints (typically 40 points). Per waypoint velocity has been already updated by /traffic_waypoint callback
      - Publish /final_waypoints
@@ -151,6 +176,8 @@ https://www.ri.cmu.edu/pub_files/2009/2/Automatic_Steering_Methods_for_Autonomou
 
 **PID controller**
 - The PID controller is turned to be an overdumped system, which makes the vehicle will be stopped smoothly. 
+
+Please use **one** of the two installation options, either native **or** docker installation.
 
 ### Native Installation
 
