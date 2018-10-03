@@ -7,7 +7,9 @@
 - Junxiao Zhu (junxiaozhu@gmail.com)
 
 - Linsen Chong (linsen.chong@gmail.com)
+
 Data Scientist at Cruise Automation
+
 Project contribution: train and develop deep learning models for traffic light detection and traffic light color classification.
 
 
