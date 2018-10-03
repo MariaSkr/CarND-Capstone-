@@ -23,6 +23,10 @@ leo.cl.mao@gmail.com
 
 junxiaozhu@gmail.com
 
+Chief Scientist at SPL Leak Detection, LLC
+
+Project contributions: Develop controller for throttle, steering and brake. Improve the path planning for stopping at traffic lights smoothly.
+
 #### Linsen Chong 
 
 linsen.chong@gmail.com
@@ -175,7 +179,7 @@ https://www.ri.cmu.edu/pub_files/2009/2/Automatic_Steering_Methods_for_Autonomou
 	 - Publish  /vehicle/steering_cmd, /vehicle/throttle_cmd and /vehicle/brake_cmd
 
 **PID controller**
-- The PID controller is turned to be an overdumped system, which makes the vehicle will be stopped smoothly. 
+- The PID controller is turned to be an overdumped system, which makes the vehicle will be accelerated and stopped smoothly. 
 
 Please use **one** of the two installation options, either native **or** docker installation.
 
