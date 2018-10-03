@@ -5,25 +5,25 @@ This is the project repo for the final project of the Udacity Self-Driving Car N
 
 ### Udacity Team
 
-####Maria Skryagina 
+#### Maria Skryagina 
 
 maria.skriaghina@gmail.com
 
 
-####Amit Marathe 
+#### Amit Marathe 
 
 amit.marathe@gmail.com
 
-####Leo Mao 
+#### Leo Mao 
 
 leo.cl.mao@gmail.com
 
 
-####Junxiao Zhu 
+#### Junxiao Zhu 
 
 junxiaozhu@gmail.com
 
-####Linsen Chong 
+#### Linsen Chong 
 
 linsen.chong@gmail.com
 
