@@ -14,6 +14,10 @@ maria.skriaghina@gmail.com
 
 amit.marathe@gmail.com
 
+Sr. SW Manager at HP
+
+Project contributions: Initial working git repo, Waypoint Updater Node and System Testing
+
 #### Leo Mao 
 
 leo.cl.mao@gmail.com
